@@ -78,3 +78,4 @@ def generate_password(length, randomize=True, numeric_count=1, upper_count=1, sp
 
     pw = ''.join(random.choice(f'{ALPH_LOWER}') for i in range(length - numeric_count - special_count - upper_count))
     return additions(pw, numeric_count, upper_count, special_count)
+
