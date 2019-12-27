@@ -41,24 +41,42 @@ def additions(base, numeric_count, upper_count, special_count):
     return ''.join(base)
 
 
-def generate_password(length, numeric_count=1, upper_count=1, special_count=1):
+def randomize_params(lenght):
+    numeric = random.randint(1, lenght - 2)
+    upper = random.randint(1, lenght - numeric - 1)
+    special = random.randint(1, lenght - numeric - upper)
+
+    return numeric, upper, special
+
+
+def generate_password(length, randomize=True, numeric_count=1, upper_count=1, special_count=1):
     '''
     Generates random password for the given parameters
-    
+
     Args:
         lenght (int, Required): The total desired lenght of the password
+        randomize (Boolean, Optional): Either randomize the numeric/upper/special character count OR not
+            Default = True
+            if randomize True, given params are discarded
         numeric_count (int, Optional): Number of numeric characters
             Default = 1
         upper_count (int, Optional): Number of uppercase characters
             Default = 1
         special_count (int, Optional): Number of special characters
-            Default = 1         
+            Default = 1
 
         returns:
             String if inputs are valid None otherwise
+
+        Note: 
+            Minimum lenght is 3
     '''
-    if validate_input(length, numeric_count, upper_count, special_count):
-        pw = ''.join(random.choice(f'{ALPH_LOWER}') for i in range(length - numeric_count - special_count - upper_count))
-        pw = additions(pw, numeric_count, upper_count, special_count)
-        return pw
-    return
+    if randomize and length > 3:
+        numeric_count, upper_count, special_count = randomize_params(length - 1)
+    elif not validate_input(length, numeric_count, upper_count, special_count):
+        return
+
+    pw = ''.join(random.choice(f'{ALPH_LOWER}') for i in range(length - numeric_count - special_count - upper_count))
+    return additions(pw, numeric_count, upper_count, special_count)
+
+print(generate_password(25, True))
