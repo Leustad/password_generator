@@ -68,7 +68,7 @@ def generate_password(length, randomize=True, numeric_count=1, upper_count=1, sp
         returns:
             String if inputs are valid None otherwise
 
-        Note: 
+        Note:
             Minimum lenght is 3
     '''
     if randomize and length > 3:
@@ -78,5 +78,3 @@ def generate_password(length, randomize=True, numeric_count=1, upper_count=1, sp
 
     pw = ''.join(random.choice(f'{ALPH_LOWER}') for i in range(length - numeric_count - special_count - upper_count))
     return additions(pw, numeric_count, upper_count, special_count)
-
-print(generate_password(25, True))
